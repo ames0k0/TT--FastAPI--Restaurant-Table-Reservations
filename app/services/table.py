@@ -8,7 +8,6 @@ from fastapi import Depends
 from app.models.table import TableModel
 from app.schemas.table import TableCreateSchema
 from app.repositories.table import TableRepository, TableRepositoryProtocol
-from app.infrastructure.database import SessionDependency
 
 
 class TableServiceProtocol(Protocol):
@@ -16,20 +15,17 @@ class TableServiceProtocol(Protocol):
 
     async def get_tables(
         self: Self,
-        session: SessionDependency,
     ) -> Sequence[TableModel]: ...
 
     async def create_table(
         self: Self,
         table: TableCreateSchema,
-        session: SessionDependency,
     ) -> TableModel: ...
 
     async def delete_table(
         self: Self,
         table_id: int,
-        session: SessionDependency,
-    ) -> TableModel: ...
+    ) -> None: ...
 
 
 class TableServiceImpl:
@@ -41,23 +37,20 @@ class TableServiceImpl:
 
     async def get_tables(
         self: Self,
-        session: SessionDependency,
     ) -> Sequence[TableModel]:
-        return await self.repository.get_tables(session=session)
+        return await self.repository.get_tables()
 
     async def create_table(
         self: Self,
         table: TableCreateSchema,
-        session: SessionDependency,
     ) -> TableModel:
-        return await self.repository.create_table(table=table, session=session)
+        return await self.repository.create_table(table=table)
 
     async def delete_table(
         self: Self,
         table_id: int,
-        session: SessionDependency,
     ) -> None:
-        await self.repository.delete_table(table_id=table_id, session=session)
+        await self.repository.delete_table(table_id=table_id)
 
 
 async def get_table_service(
