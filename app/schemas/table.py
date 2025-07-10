@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from pydantic import PositiveInt
+from pydantic import ConfigDict
 from pydantic import Field
 
 
@@ -20,5 +21,4 @@ class TableOutSchema(TableBaseSchema):
 
     id: PositiveInt = Field(..., description="ID столика")
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
