@@ -13,7 +13,7 @@ from app.exceptions.table import TableNotFoundException
 
 
 class TableRepositoryProtocol(Protocol):
-    """TODO"""
+    """Протокол репозитории столика в ресторане"""
 
     async def get_tables(
         self: Self,
@@ -31,18 +31,22 @@ class TableRepositoryProtocol(Protocol):
 
 
 class TableRepositoryImpl:
+    """Имплементация репозитории столика в ресторане"""
+
     def __init__(self: Self, session: SessionDependency) -> None:
         self.session = session
 
     async def get_tables(
         self: Self,
     ) -> Sequence[TableModel]:
+        """Получение всех столиков в ресторане"""
         return self.session.exec(select(TableModel)).all()
 
     async def create_table(
         self: Self,
         table: TableCreateSchema,
     ) -> TableModel:
+        """Создание столика в ресторане"""
         new_table = TableModel(**table.model_dump())
 
         self.session.add(new_table)
@@ -55,9 +59,10 @@ class TableRepositoryImpl:
         self: Self,
         table_id: int,
     ) -> None:
+        """Удаление столика из ресторана"""
         db_table = self.session.get(TableModel, table_id)
         if not db_table:
-            raise TableNotFoundException()
+            raise TableNotFoundException(table_id=table_id)
         self.session.delete(db_table)
         self.session.commit()
 

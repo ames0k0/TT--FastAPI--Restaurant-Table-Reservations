@@ -11,7 +11,7 @@ from app.repositories.table import TableRepository, TableRepositoryProtocol
 
 
 class TableServiceProtocol(Protocol):
-    """TODO"""
+    """Протокол сервиса столика в ресторане"""
 
     async def get_tables(
         self: Self,
@@ -29,6 +29,8 @@ class TableServiceProtocol(Protocol):
 
 
 class TableServiceImpl:
+    """Имплементация сервиса столика в ресторане"""
+
     def __init__(
         self: Self,
         repository: TableRepositoryProtocol,

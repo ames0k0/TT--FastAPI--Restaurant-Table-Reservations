@@ -9,7 +9,7 @@ from sqlmodel import create_engine
 
 
 engine = create_engine(
-    url=str(settings.POSTGRES_DSN),
+    url=str(settings.DB__POSTGRES_DSN),
 )
 
 

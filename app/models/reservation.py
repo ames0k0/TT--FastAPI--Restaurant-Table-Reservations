@@ -5,6 +5,10 @@ from sqlmodel import SQLModel
 
 
 class ReservationModel(SQLModel, table=True):
+    """Модель бронь в ресторане"""
+
+    __tablename__ = "reservation"  # type: ignore
+
     id: int = Field(..., primary_key=True, description="TODO")
 
     customer_name: str = Field(..., description="TODO")
@@ -12,4 +16,4 @@ class ReservationModel(SQLModel, table=True):
     duration_time: int = Field(..., description="TODO")
 
     # -- Relations
-    table_id: int = Field(..., foreign_key="table.id")
+    table_id: int = Field(..., foreign_key="table.id", description="TODO")

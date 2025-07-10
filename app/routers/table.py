@@ -3,6 +3,7 @@ from typing import Sequence
 
 from fastapi import APIRouter
 from fastapi import Path
+from pydantic import PositiveInt
 
 from app.schemas.table import TableCreateSchema
 from app.schemas.table import TableOutSchema
@@ -17,9 +18,8 @@ async def get_tables(
     table_service: TableService,
 ):
     """Возвращает список всех столиков"""
-    tables = await table_service.get_tables()
-    print(tables)
-    return tables
+
+    return await table_service.get_tables()
 
 
 @table_router.post("/", response_model=TableOutSchema)
@@ -28,17 +28,23 @@ async def create_table(
     table_service: TableService,
 ):
     """Создаёт нового столика"""
-    db_table = await table_service.create_table(table=table)
-    print("??", db_table)
-    return db_table
+
+    return await table_service.create_table(table=table)
 
 
 @table_router.delete("/{id}", response_model=None)
 async def delete_table(
-    table_id: Annotated[int, Path(title="TODO", alias="id")],
+    table_id: Annotated[
+        PositiveInt,
+        Path(
+            description="ID столика",
+            alias="id",
+        ),
+    ],
     table_service: TableService,
 ):
     """Удаляет столика по `id`,
 
     выбрасывает исключение при отсутствие столика"""
+
     await table_service.delete_table(table_id=table_id)

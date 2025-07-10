@@ -1,19 +1,24 @@
 from pydantic import BaseModel
+from pydantic import PositiveInt
+from pydantic import Field
 
 
 class TableBaseSchema(BaseModel):
-    name: str
-    seats: int
-    location: str
+    """Базовая схема столика в ресторане"""
+
+    name: str = Field(..., description="Название столика")
+    seats: PositiveInt = Field(..., description="Количество мест за столиком")
+    location: str = Field(..., description="Расположение столика")
 
 
 class TableCreateSchema(TableBaseSchema):
-    pass
+    """Схема создание столика в ресторане"""
 
 
 class TableOutSchema(TableBaseSchema):
-    id: int
+    """Схема получение столика в ресторане"""
+
+    id: PositiveInt = Field(..., description="ID столика")
 
     class Config:
         from_attributes = True
-        arbitrary_types_allowed = True

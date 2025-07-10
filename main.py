@@ -1,28 +1,28 @@
 import uvicorn
 from fastapi import FastAPI
 
+from app.core.config import settings
 from app.routers.table import table_router
 
 
-# TODO (ames0k0): Remove debug
-app = FastAPI(title="Modular FastAPI App", debug=True)
+app = FastAPI(
+    title=settings.APP__TITLE,
+    description=settings.APP__DESCRIPTION,
+    debug=settings.SYSTEM__DEBUG,
+)
 
 
 app.include_router(table_router, prefix="/tables", tags=["tables"])
 
 
-@app.get("/", tags=["index"])
+@app.get("/", tags=["index"], response_model=dict)
 def read_root():
+    """Энтрипоинт для получение доступных эндпоинтов"""
+
     return {
         "routers": [
-            {
-                "name": "Столики",
-                "prefix": "/tables",
-            },
-            {
-                "name": "Брони",
-                "prefix": "/reservations",
-            },
+            {"name": "Столики", "prefix": "/tables"},
+            {"name": "Брони", "prefix": "/reservations"},
         ]
     }
 

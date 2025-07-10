@@ -2,9 +2,11 @@ from sqlmodel import Field, SQLModel
 
 
 class TableModel(SQLModel, table=True):
-    """Модель стола в ресторане"""
+    """Модель столика в ресторане"""
 
-    id: int = Field(..., primary_key=True)
-    name: str = Field(..., description="")
-    seats: int = Field(..., index=True)
-    location: str
+    __tablename__ = "table"  # type: ignore
+
+    id: int = Field(..., primary_key=True, description="ID столика")
+    name: str = Field(..., description="Название столика")
+    seats: int = Field(..., description="Количество мест за столиком")
+    location: str = Field(..., description="Расположение столика")
