@@ -1,6 +1,18 @@
+from typing import Literal
+
+from pydantic import BaseModel
 from pydantic import PostgresDsn
 from pydantic import Field
 from pydantic_settings import BaseSettings
+
+
+class SystemConfig(BaseModel):
+    RUNTIME__MODE: Literal["prod", "dev"] = "prod"
+    APP__DEBUG: bool = False
+    UVICORN__APP: str = "main:app"
+    UVICORN__HOST: str = "localhost"
+    UVICORN__PORT: int = 8000
+    UVICORN__RELOAD: bool = False
 
 
 class Settings(BaseSettings):
@@ -8,11 +20,12 @@ class Settings(BaseSettings):
     APP__TITLE: str = "Сервис для бронирования столиков"
     APP__DESCRIPTION: str = """
     Сервис позволяет создавать, просматривать и удалять брони,
-    а также управлять столиками и временными слотами.
+
+    также управлять столиками и временными слотами.
     """
 
     # Настройки системные
-    SYSTEM__DEBUG: bool = False
+    SYSTEM: SystemConfig = SystemConfig()
 
     # Настройки базы данных
     DB__POSTGRES_DSN: PostgresDsn = Field(default=...)

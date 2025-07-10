@@ -8,7 +8,7 @@ from app.routers.table import table_router
 app = FastAPI(
     title=settings.APP__TITLE,
     description=settings.APP__DESCRIPTION,
-    debug=settings.SYSTEM__DEBUG,
+    debug=settings.SYSTEM.APP__DEBUG,
 )
 
 
@@ -29,6 +29,8 @@ def read_root():
 
 if __name__ == "__main__":
     uvicorn.run(
-        app="main:app",
-        reload=True,
+        app=settings.SYSTEM.UVICORN__APP,
+        host=settings.SYSTEM.UVICORN__HOST,
+        port=settings.SYSTEM.UVICORN__PORT,
+        reload=settings.SYSTEM.UVICORN__RELOAD,
     )
