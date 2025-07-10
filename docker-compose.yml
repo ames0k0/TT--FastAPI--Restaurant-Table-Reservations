@@ -1,0 +1,25 @@
+services:
+  database:
+    image: postgres
+    container_name: restaurant_table_reservations__database
+    environment:
+      POSTGRES_PASSWORD: simple
+      POSTGRES_DB: restaurant_table_reservations
+      POSTGRES_USER: postgres
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d restaurant_table_reservations"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    # TODO (ames0k0): Remove porsts
+    ports:
+      - 5454:5432
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+    driver: local
