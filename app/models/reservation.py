@@ -13,7 +13,9 @@ class ReservationModel(SQLModel, table=True):
 
     customer_name: str = Field(description="Имя клиента")
     reservation_time: datetime = Field(description="Время резервирования")
-    duration_time: int = Field(description="Продолжительность резервирования в минутах")
+    duration_time: int = Field(
+        description="Продолжительность резервирования в минутах",
+    )
 
     # -- Relations
     table_id: int = Field(foreign_key="table.id", description="ID столика")

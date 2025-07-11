@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from app.core.config import settings
 from app.infrastructure.database import create_database_tables
 from app.routers.table import table_router
+from app.routers.reservation import reservation_router
 
 
 @asynccontextmanager
@@ -22,7 +23,16 @@ app = FastAPI(
 )
 
 
-app.include_router(table_router, prefix="/tables", tags=["tables"])
+app.include_router(
+    table_router,
+    prefix="/tables",
+    tags=["tables"],
+)
+app.include_router(
+    reservation_router,
+    prefix="/reservations",
+    tags=["reservations"],
+)
 
 
 @app.get("/", tags=["index"], response_model=dict)
