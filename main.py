@@ -32,5 +32,5 @@ if __name__ == "__main__":
         app=settings.SYSTEM.UVICORN__APP,
         host=settings.SYSTEM.UVICORN__HOST,
         port=settings.SYSTEM.UVICORN__PORT,
-        reload=settings.SYSTEM.UVICORN__RELOAD,
+        reload=bool(settings.SYSTEM.UVICORN__RELOAD),
     )

@@ -12,7 +12,7 @@ class SystemConfig(BaseModel):
     UVICORN__APP: str = "main:app"
     UVICORN__HOST: str = "localhost"
     UVICORN__PORT: int = 8000
-    UVICORN__RELOAD: bool = False
+    UVICORN__RELOAD: Literal["0", "1"] = "0"
 
 
 class Settings(BaseSettings):
