@@ -1,14 +1,24 @@
+from contextlib import asynccontextmanager
+
 import uvicorn
 from fastapi import FastAPI
 
 from app.core.config import settings
+from app.infrastructure.database import create_database_tables
 from app.routers.table import table_router
+
+
+@asynccontextmanager
+async def lifespan(_):
+    create_database_tables()
+    yield
 
 
 app = FastAPI(
     title=settings.APP__TITLE,
     description=settings.APP__DESCRIPTION,
     debug=settings.SYSTEM.APP__DEBUG,
+    lifespan=lifespan,
 )
 
 
@@ -16,7 +26,7 @@ app.include_router(table_router, prefix="/tables", tags=["tables"])
 
 
 @app.get("/", tags=["index"], response_model=dict)
-def read_root():
+async def read_root():
     """Энтрипоинт для получение доступных эндпоинтов"""
 
     return {

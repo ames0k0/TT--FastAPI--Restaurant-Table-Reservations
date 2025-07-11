@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from sqlmodel import Field
 from sqlmodel import SQLModel
+from sqlmodel import Field
 
 
 class ReservationModel(SQLModel, table=True):
