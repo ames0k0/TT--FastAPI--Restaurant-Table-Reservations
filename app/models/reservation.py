@@ -9,11 +9,11 @@ class ReservationModel(SQLModel, table=True):
 
     __tablename__ = "reservation"  # type: ignore
 
-    id: int = Field(..., primary_key=True, description="TODO")
+    id: int = Field(primary_key=True, description="ID бронирования")
 
-    customer_name: str = Field(..., description="TODO")
-    reservation_time: datetime = Field(..., description="TODO")
-    duration_time: int = Field(..., description="TODO")
+    customer_name: str = Field(description="Имя клиента")
+    reservation_time: datetime = Field(description="Время резервирования")
+    duration_time: int = Field(description="Продолжительность резервирования в минутах")
 
     # -- Relations
-    table_id: int = Field(..., foreign_key="table.id", description="TODO")
+    table_id: int = Field(foreign_key="table.id", description="ID столика")
