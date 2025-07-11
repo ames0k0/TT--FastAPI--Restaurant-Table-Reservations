@@ -13,7 +13,7 @@ class ReservationModel(SQLModel, table=True):
 
     customer_name: str = Field(description="Имя клиента")
     reservation_time: datetime = Field(description="Время резервирования")
-    duration_time: int = Field(
+    duration_minutes: int = Field(
         description="Продолжительность резервирования в минутах",
     )
 

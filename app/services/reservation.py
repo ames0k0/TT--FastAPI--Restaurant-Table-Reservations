@@ -7,6 +7,7 @@ from fastapi import Depends
 from pydantic import PositiveInt
 
 from app.models.reservation import ReservationModel
+from app.schemas.reservation import ReservationCreateSchema
 from app.repositories.reservation import ReservationRepositoryProtocol
 from app.repositories.reservation import ReservationRepository
 
@@ -17,6 +18,11 @@ class ReservationServiceProtocol(Protocol):
     async def get_reservations(
         self: Self,
     ) -> Sequence[ReservationModel]: ...
+
+    async def create_reservation(
+        self: Self,
+        reservation: ReservationCreateSchema,
+    ) -> ReservationModel: ...
 
     async def delete_reservation(
         self: Self,
@@ -35,6 +41,14 @@ class ReservationServiceImpl:
 
     async def get_reservations(self: Self) -> Sequence[ReservationModel]:
         return await self.repository.get_reservations()
+
+    async def create_reservation(
+        self: Self,
+        reservation: ReservationCreateSchema,
+    ) -> ReservationModel:
+        return await self.repository.create_reservation(
+            reservation=reservation,
+        )
 
     async def delete_reservation(
         self: Self,

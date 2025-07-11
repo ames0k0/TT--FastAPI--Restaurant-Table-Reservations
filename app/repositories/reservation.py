@@ -8,6 +8,7 @@ from sqlmodel import select
 from pydantic import PositiveInt
 
 from app.models.reservation import ReservationModel
+from app.schemas.reservation import ReservationCreateSchema
 from app.exceptions.reservation import ReservationNotFoundException
 from app.infrastructure.database import SessionDependency
 
@@ -18,6 +19,11 @@ class ReservationRepositoryProtocol(Protocol):
     async def get_reservations(
         self: Self,
     ) -> Sequence[ReservationModel]: ...
+
+    async def create_reservation(
+        self: Self,
+        reservation: ReservationCreateSchema,
+    ) -> ReservationModel: ...
 
     async def delete_reservation(
         self: Self,
@@ -37,6 +43,20 @@ class ReservationRepositoryImpl:
         """Получение всех столиков в ресторане"""
 
         return self.session.exec(select(ReservationModel)).all()
+
+    async def create_reservation(
+        self: Self,
+        reservation: ReservationCreateSchema,
+    ) -> ReservationModel:
+        """Создание брони"""
+
+        new_reservation = ReservationModel(**reservation.model_dump())
+
+        self.session.add(new_reservation)
+        self.session.commit()
+        self.session.refresh(new_reservation)
+
+        return new_reservation
 
     async def delete_reservation(
         self: Self,
