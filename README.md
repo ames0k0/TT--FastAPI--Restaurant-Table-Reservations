@@ -10,3 +10,5 @@ export UVICORN__RELOAD=1
 # Start an application
 uv run python main.py
 ```
+
+<p align="center"><img src="./_readme/Diagram.drawio.png" /></p>
