@@ -32,7 +32,7 @@ async def create_table(
     return await table_service.create_table(table=table)
 
 
-@table_router.delete("/{id}", response_model=None)
+@table_router.delete("/{id}")
 async def delete_table(
     table_id: Annotated[
         PositiveInt,

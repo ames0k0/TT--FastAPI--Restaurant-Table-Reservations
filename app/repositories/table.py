@@ -5,6 +5,7 @@ from typing import Annotated
 
 from fastapi import Depends
 from sqlmodel import select
+from pydantic import PositiveInt
 
 from app.models.table import TableModel
 from app.schemas.table import TableCreateSchema
@@ -26,7 +27,7 @@ class TableRepositoryProtocol(Protocol):
 
     async def delete_table(
         self: Self,
-        table_id: int,
+        table_id: PositiveInt,
     ) -> None: ...
 
 
@@ -40,6 +41,7 @@ class TableRepositoryImpl:
         self: Self,
     ) -> Sequence[TableModel]:
         """Получение всех столиков в ресторане"""
+
         return self.session.exec(select(TableModel)).all()
 
     async def create_table(
@@ -47,6 +49,7 @@ class TableRepositoryImpl:
         table: TableCreateSchema,
     ) -> TableModel:
         """Создание столика в ресторане"""
+
         new_table = TableModel(**table.model_dump())
 
         self.session.add(new_table)
@@ -57,12 +60,14 @@ class TableRepositoryImpl:
 
     async def delete_table(
         self: Self,
-        table_id: int,
+        table_id: PositiveInt,
     ) -> None:
         """Удаление столика из ресторана"""
+
         db_table = self.session.get(TableModel, table_id)
         if not db_table:
             raise TableNotFoundException(table_id=table_id)
+
         self.session.delete(db_table)
         self.session.commit()
 

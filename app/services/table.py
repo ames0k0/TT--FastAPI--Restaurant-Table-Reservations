@@ -4,6 +4,7 @@ from typing import Self
 from typing import Sequence
 
 from fastapi import Depends
+from pydantic import PositiveInt
 
 from app.models.table import TableModel
 from app.schemas.table import TableCreateSchema
@@ -24,7 +25,7 @@ class TableServiceProtocol(Protocol):
 
     async def delete_table(
         self: Self,
-        table_id: int,
+        table_id: PositiveInt,
     ) -> None: ...
 
 
@@ -50,7 +51,7 @@ class TableServiceImpl:
 
     async def delete_table(
         self: Self,
-        table_id: int,
+        table_id: PositiveInt,
     ) -> None:
         await self.repository.delete_table(table_id=table_id)
 

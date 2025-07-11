@@ -5,8 +5,10 @@ from typing import Annotated
 
 from fastapi import Depends
 from sqlmodel import select
+from pydantic import PositiveInt
 
 from app.models.reservation import ReservationModel
+from app.exceptions.reservation import ReservationNotFoundException
 from app.infrastructure.database import SessionDependency
 
 
@@ -16,6 +18,11 @@ class ReservationRepositoryProtocol(Protocol):
     async def get_reservations(
         self: Self,
     ) -> Sequence[ReservationModel]: ...
+
+    async def delete_reservation(
+        self: Self,
+        reservation_id: PositiveInt,
+    ) -> None: ...
 
 
 class ReservationRepositoryImpl:
@@ -28,7 +35,21 @@ class ReservationRepositoryImpl:
         self: Self,
     ) -> Sequence[ReservationModel]:
         """Получение всех столиков в ресторане"""
+
         return self.session.exec(select(ReservationModel)).all()
+
+    async def delete_reservation(
+        self: Self,
+        reservation_id: PositiveInt,
+    ) -> None:
+        """Удаление брони"""
+
+        db_reservation = self.session.get(ReservationModel, reservation_id)
+        if not db_reservation:
+            raise ReservationNotFoundException(reservation_id=reservation_id)
+
+        self.session.delete(db_reservation)
+        self.session.commit()
 
 
 async def get_reservation_repository(
