@@ -11,4 +11,9 @@ export UVICORN__RELOAD=1
 uv run python main.py
 ```
 
-<p align="center"><img src="./_readme/Diagram.drawio.png" /></p>
+---
+
+<p align="center">
+  <img src="./_readme/rest-api.png" />
+  <img src="./_readme/Diagram.drawio.png" />
+</p>
