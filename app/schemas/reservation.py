@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from pydantic import PositiveInt
 from pydantic import Field
-from pydantic import NaiveDatetime
+from pydantic import FutureDatetime
 from sqlmodel import Session
 from sqlmodel import select
 
@@ -16,7 +16,7 @@ class ReservationBaseSchema(BaseModel):
     """Базовая схема бронирование столика в ресторане"""
 
     customer_name: str = Field(description="Имя клиента")
-    reservation_time: NaiveDatetime = Field(description="Время резервирования")
+    reservation_time: FutureDatetime = Field(description="Время резервирования")
     duration_minutes: PositiveInt = Field(
         description="Продолжительность резервирования в минутах"
     )
