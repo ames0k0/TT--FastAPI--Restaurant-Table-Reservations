@@ -18,7 +18,7 @@ async def lifespan(_):
 app = FastAPI(
     title=settings.APP__TITLE,
     description=settings.APP__DESCRIPTION,
-    debug=settings.SYSTEM.APP__DEBUG,
+    debug=settings.APP__DEBUG,
     lifespan=lifespan,
 )
 
@@ -49,8 +49,8 @@ async def read_root():
 
 if __name__ == "__main__":
     uvicorn.run(
-        app=settings.SYSTEM.UVICORN__APP,
-        host=settings.SYSTEM.UVICORN__HOST,
-        port=settings.SYSTEM.UVICORN__PORT,
-        reload=bool(settings.SYSTEM.UVICORN__RELOAD),
+        app=settings.UVICORN__APP,
+        host=settings.UVICORN__HOST,
+        port=settings.UVICORN__PORT,
+        reload=bool(settings.UVICORN__RELOAD),
     )

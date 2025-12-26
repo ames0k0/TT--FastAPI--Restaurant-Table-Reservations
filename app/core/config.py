@@ -1,18 +1,8 @@
 from typing import Literal
 
-from pydantic import BaseModel
 from pydantic import PostgresDsn
 from pydantic import Field
 from pydantic_settings import BaseSettings
-
-
-class SystemConfig(BaseModel):
-    RUNTIME__MODE: Literal["prod", "dev"] = "prod"
-    APP__DEBUG: bool = False
-    UVICORN__APP: str = "main:app"
-    UVICORN__HOST: str = "localhost"
-    UVICORN__PORT: int = 8000
-    UVICORN__RELOAD: Literal["0", "1"] = "0"
 
 
 class Settings(BaseSettings):
@@ -25,10 +15,15 @@ class Settings(BaseSettings):
     """
 
     # Настройки системные
-    SYSTEM: SystemConfig = SystemConfig()
+    APP__DEBUG: bool = False
+    RUNTIME__MODE: Literal["prod", "dev"] = "prod"
+    UVICORN__APP: str = "main:app"
+    UVICORN__HOST: str = "localhost"
+    UVICORN__PORT: int = 8000
+    UVICORN__RELOAD: Literal["0", "1"] = "0"
 
     # Настройки базы данных
     DB__POSTGRES_DSN: PostgresDsn = Field(default=...)
 
 
-settings = Settings()
+settings: Settings = Settings()
