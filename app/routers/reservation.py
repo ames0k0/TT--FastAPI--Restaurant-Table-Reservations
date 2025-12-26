@@ -49,6 +49,8 @@ async def delete_reservation(
     ],
     reservation_service: ReservationService,
 ):
-    """Удаляет бронь"""
+    """Удаляет бронь по `id`,
+
+    выбрасывает исключение при отсутствие брони"""
 
     await reservation_service.delete_reservation(reservation_id=reservation_id)
