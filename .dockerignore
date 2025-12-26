@@ -1,0 +1,14 @@
+pgdata
+dev-pgdata
+__pycache__
+.git
+_readme
+.venv
+.vscode
+tests
+uv.lock
+pyproject.toml
+*.yml
+.pytest*
+.python-version
+.dockerignore

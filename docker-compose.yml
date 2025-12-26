@@ -1,4 +1,21 @@
 services:
+  restapi:
+    build: .
+    image: restaurant_table_reservations__restapi:v0.1.0
+    container_name: restaurant_table_reservations__restapi
+    environment:
+      - UVICORN__HOST=0.0.0.0
+      - UVICORN__PORT=8800
+      - APP__DEBUG=True
+      - DB__POSTGRES_DSN=postgresql+psycopg2://postgres:simple@database:5432/restaurant_table_reservations
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: true
+    ports:
+      - 8800:8800
+    restart: unless-stopped
+
   database:
     image: postgres
     container_name: restaurant_table_reservations__database
@@ -15,9 +32,6 @@ services:
       retries: 5
       start_period: 30s
       timeout: 10s
-    # TODO (ames0k0): Remove porsts
-    ports:
-      - 5454:5432
     restart: unless-stopped
 
 volumes:

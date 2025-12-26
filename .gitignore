@@ -6,4 +6,6 @@
 *.bkp
 *.swp
 
+.vscode
 pgdata
+dev-pgdata
