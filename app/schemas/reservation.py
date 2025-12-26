@@ -16,7 +16,9 @@ class ReservationBaseSchema(BaseModel):
     """Базовая схема бронирование столика в ресторане"""
 
     customer_name: str = Field(description="Имя клиента")
-    reservation_time: FutureDatetime = Field(description="Время резервирования")
+    reservation_time: FutureDatetime = Field(
+        description="Время резервирования",
+    )
     duration_minutes: PositiveInt = Field(
         description="Продолжительность резервирования в минутах"
     )

@@ -112,7 +112,7 @@ def test_delete_table_errors():
         assert str(id) in custom_exception["detail"]
 
 
-def test_delete_table():
+def test_delete_created_tables():
     for table_id in CREATED_TABLES:
         response = client.delete(f"/tables/{table_id}")
         assert response.status_code == 200

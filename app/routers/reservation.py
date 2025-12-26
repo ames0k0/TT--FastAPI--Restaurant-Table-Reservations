@@ -33,7 +33,9 @@ async def create_reservation(
 ):
     """Создаёт бронь"""
 
-    return await reservation_service.create_reservation(reservation=reservation)
+    return await reservation_service.create_reservation(
+        reservation=reservation,
+    )
 
 
 @reservation_router.delete("/{id}")
